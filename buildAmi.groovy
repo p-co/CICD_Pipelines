@@ -14,11 +14,11 @@ pipeline {
       }
       stage('Git clone') {
          steps {
-            dir 'BuildAMI'{
+            dir('BuildAMI'){
                 sh 'pwd'
                 git(
-                url: 'https://github.com/p-co/CICD_TP_Build_AMI',
-                credentialsId: 'afbaa30d-b712-4445-b89c-8dc67c3f8e64',
+                url: 'https://github.com/p-co/CICD_TP_Build_AMI.git',
+                credentialsId: '73abe7bf-c9db-442a-8e34-a440591578d8',
                 branch: "${branch}"
                 )
                 sh 'ls -l'
@@ -27,14 +27,13 @@ pipeline {
       }
       stage('building AMI'){
         steps{
-          dir 'BuildAMI'{
+          dir('BuildAMI'){
              sh "packer build \
-		-var env=$ENV \
 		-var app_repo=$APP_REPO \
 		-var app_name=$APP_NAME \
 		-var ip=$ip \
 		-var ami=$ami \
-		-var subnet=$subnet \
+      -var port=$port \
 		buildAMI.json"
           }
         }
