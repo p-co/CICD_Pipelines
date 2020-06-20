@@ -17,7 +17,7 @@ pipeline {
             dir('BuildAMI'){
                 sh 'pwd'
                 git(
-                url: 'https://github.com/p-co/CICD_TP_Build_AMI.git',
+                url: 'https://github.com/p-co/CICD_Build_AMI.git',
                 credentialsId: '73abe7bf-c9db-442a-8e34-a440591578d8',
                 branch: "${branch}"
                 )
