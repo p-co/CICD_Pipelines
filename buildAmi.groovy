@@ -32,8 +32,7 @@ pipeline {
 		-var app_repo=$APP_REPO \
 		-var app_name=$APP_NAME \
 		-var ip=$ip \
-		-var ami=$ami \
-      -var port=$port \
+		-var port=$port \
 		buildAMI.json"
           }
         }
