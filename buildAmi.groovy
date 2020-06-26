@@ -2,7 +2,6 @@ pipeline {
    agent any
    
    environment {
-       branch = "master"
        ip = sh(script: "curl http://169.254.169.254/latest/meta-data/public-ipv4", returnStdout: true)
    }
 
@@ -19,7 +18,7 @@ pipeline {
                 git(
                 url: 'https://github.com/p-co/CICD_Build_AMI.git',
                 credentialsId: '73abe7bf-c9db-442a-8e34-a440591578d8',
-                branch: "${branch}"
+                branch: "$branch"
                 )
                 sh 'ls -l'
             }
