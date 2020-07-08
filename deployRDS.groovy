@@ -1,5 +1,9 @@
 pipeline {
    agent any
+   
+   environment {
+       branch = "master"
+   }
 
    stages {
       stage('clean workspace'){
@@ -7,21 +11,28 @@ pipeline {
               cleanWs()
           }
       }
-      stage('Deploy RDS') {
+      stage('Git clone') {
+         steps {
+                sh 'pwd'
+                git(
+                url: 'https://github.com/p-co/CICD_Deploy_RDS.git',
+                credentialsId: '73abe7bf-c9db-442a-8e34-a440591578d8',
+                branch: "${branch}"
+                )
+                sh 'ls -l'
+            
+         }
+      }
+      stage('Terraform Init') {
         steps {
-            sh "aws rds create-db-instance \
---engine mysql \
---db-instance-identifier mysqlforsymfony \
---db-instance-class db.t2.micro \
---engine-version 5.7.26 \
---allocated-storage 20 \
---master-username admin \
---master-user-password password \
---backup-retention-period 0 \
---availability-zone eu-west-1a \
---no-auto-minor-version-upgrade \
---no-deletion-protection \
---no-publicly-accessible"
+            sh "terraform init -input=false"
+            
+        }
+      }
+      stage('Deploying RDS'){
+        steps{
+            sh "terraform apply -input=false -auto-approve"
+          
         }
       }
       
