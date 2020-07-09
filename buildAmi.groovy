@@ -40,6 +40,8 @@ pipeline {
                 sh "packer build \
             	-var app_repo=$APP_REPO \
             	-var app_name=$APP_NAME \
+            	-var env=$ENV \
+            	-var db_url=$DB_URL \
             	-var ip=$ip \
             	-var port=$port \
             	buildAMISymfony.json"
